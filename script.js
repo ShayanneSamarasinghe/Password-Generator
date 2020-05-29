@@ -1,45 +1,96 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 var myuppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var mylowercase = "abcdefghijklmnopqrstuvwxyz";
 var mynumbers = "123456789";
+var mysymbols = "!@#$%^&*";
 var passlength = 0;
+var temppass = "";
+var mypassword = "";
 
 // Write password to the #password input
 function writePassword() {
-  console.log("We are in the function!")
   // var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  var passwordText = document.querySelector("password");
   var askuppercase = confirm("Do you want uppercase characters?");
-  console.log(askuppercase);
+  if(askuppercase){
+    temppass += myuppercase;
+    console.log(temppass);
+
+  }
+  
+  var asklowercase = confirm("Do you want lowercase characters?");
+  if(asklowercase){
+    temppass += mylowercase;
+    console.log(temppass);
+
+  }
+  
+  var asksymbols = confirm("Do you want symbol characters? IE:!@#$%^&* ");
+  if(asksymbols){
+    temppass += mysymbols;
+    console.log(temppass);
+
+  }
+  
   var asknumbers = confirm("Do you want numbers?");
-  console.log(asknumbers);
-  var passlength = prompt ("how many characters do you want? Between 8 and 128");
-  console.log(passlength);
-  console.log(typeof(passlength));
-  passlength = Number(passlength);
-  console.log(typeof(passlength))
+  if(asknumbers){
+    temppass += mynumbers;  
+    console.log(temppass);
+    
 
-  if(passlength >= 8 && passlength <= 128 ){
-    var mypassword= "";
+  }
+  
+  if(temppass.length == 0){
+    alert("You must select at least one data type. Please refresh and try again");
+ 
+ 
+ 
+  }
 
-    //loop as many times as the pass length
-    //for every repetition of the loop, we will add 1 random character from our selection
-    // check the users criteria (upercase, lowercase, etc.)
-    //Build a temporary password string with all characters that the user wants...
-    //var temppass = myuppercase + mynumbers
+  else{
+    randomtemppass = shuffle(temppass);
+    console.log(randomtemppass);
 
+    var passlength = prompt ("How many characters do you want? Between 8 and 128");
+    // passlength = Number(passlength);
+    console.log(typeof(passlength))
+    if(passlength >= 8 && passlength <= 128 && !isNaN(passlength)){
+      var myTruncatedString = randomtemppass.substring(0,passlength);
+      document.getElementById("password").value = myTruncatedString
+
+      
+
+
+    }
+
+
+    else{
+      alert("Input not correct. Please start over");
+    }
   }
 
 
+  
 
 
 
-  passwordText.value = "Password will appear here";
- 
+  
 
-  // passwordText.value = password;
+   
 
 }
+
+function shuffle(s) {
+  var arr = s.split('');          
+  
+  arr.sort(function() {
+    return 0.5 - Math.random();
+  });  
+  s = arr.join('');                
+  return s;  
+}                      
+
 
 // // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
